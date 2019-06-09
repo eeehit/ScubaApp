@@ -1,5 +1,6 @@
 package com.psp.scuba
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
@@ -8,38 +9,67 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
-import kotlinx.android.synthetic.main.content_main.*
+import com.psp.scuba.fish.FishActivity
+import com.psp.scuba.site.SiteActivity
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    var siteList = arrayListOf<Site>(
-        Site("보라카이", "주변에 놀거리가 많아서 좋아욥", "boracay"),
-        Site("팔라우", "최고의 블루코너", "palau")
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //텍스트 찍기
-        //val main_text : TextView = findViewById(R.id.main_text)
-        //main_text.setText("Hello world!!")
-
-        //다이빙 포인트 리스트 메인페이지
-        val siteAdapter = MainRvAdapter(this, siteList) { site ->
-            Toast.makeText(this, "역시  ${site.name} 은 짱이야!!", Toast.LENGTH_SHORT).show()
+        val assetManager = resources.assets
+        val file = File("/data/data/com.psp.scuba/databases/scuba.db")
+        try {
+            val inputStream = assetManager.open("scuba.db", 3)
+            val l = inputStream.available()
+            if (file.length() <= 0L) {
+                val arrayOfByte = ByteArray(l)
+                inputStream.read(arrayOfByte)
+                inputStream.close()
+                file.createNewFile()
+                val fileOutputStream = FileOutputStream(file)
+                try {
+                    fileOutputStream.write(arrayOfByte)
+                    fileOutputStream.close()
+                    return
+                } catch (fileOutputStream: IOException) {
+                    Log.e("DB", "scuba.db 쓰기")
+                }
+            }
+        } catch (file: IOException) {
+            Log.e("DB", "scuba.db 이동")
         }
-        mRecyclerView.adapter = siteAdapter
-        val lm = LinearLayoutManager(this)
-        mRecyclerView.layoutManager = lm
-        mRecyclerView.setHasFixedSize(true)
+        val file2 = File("/data/data/com.psp.scuba/databases/fish.db")
+        try {
+            val inputStream = assetManager.open("fish.db", 3)
+            val l = inputStream.available()
+            if (file2.length() <= 0L) {
+                val arrayOfByte = ByteArray(l)
+                inputStream.read(arrayOfByte)
+                inputStream.close()
+                file2.createNewFile()
+                val fileOutputStream = FileOutputStream(file2)
+                try {
+                    fileOutputStream.write(arrayOfByte)
+                    fileOutputStream.close()
+                    return
+                } catch (fileOutputStream: IOException) {
+                    Log.e("DB", "fish.db 쓰기")
+                }
+            }
+        } catch (file: IOException) {
+            Log.e("DB", "fish.db 이동")
+        }
 
-        //기본
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -90,13 +120,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_home -> {
                 // Handle the camera action
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_site -> {
+                val nextIntent = Intent(this, SiteActivity::class.java)
+                startActivity(nextIntent)
             }
-            R.id.nav_slideshow -> {
-
+            R.id.nav_fish -> {
+                val nextIntent = Intent(this, FishActivity::class.java)
+                startActivity(nextIntent)
             }
-            R.id.nav_tools -> {
+            R.id.nav_coral -> {
 
             }
             R.id.nav_share -> {

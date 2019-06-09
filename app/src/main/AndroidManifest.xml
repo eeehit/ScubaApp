@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".site.SiteActivity"></activity>
+        <activity android:name=".fish.FishActivity"></activity>
+        <activity android:name=".fish.FishDetailActivity"></activity>
+
     </application>
 
 </manifest>
