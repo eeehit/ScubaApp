@@ -1,12 +1,12 @@
 package com.psp.scuba.fish
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import android.widget.TextView
+import com.psp.scuba.BaseActivity
 import com.psp.scuba.R
 
-class FishDetailActivity : AppCompatActivity() {
+class FishDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

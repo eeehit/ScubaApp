@@ -8,9 +8,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_site">스쿠버포인트</string>
+    <string name="menu_site">스쿠버 포인트</string>
     <string name="menu_fish">물고기</string>
     <string name="menu_coral">산호</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="title_activity_site_detail">포인트 정보</string>
+    <string name="tab_info">기본정보</string>
+    <string name="tab_pic">사진</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
